@@ -1,0 +1,22 @@
+name: Pipeline Inseguro
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Exibir variáveis
+        run: |
+          echo "DATABASE_USER=admin"
+          echo "DATABASE_PASSWORD=SenhaSuperSecreta123"
+          echo "API_TOKEN=ghp_token_exemplo_123456"
+
+      - name: Executar aplicação
+        run: python app/main.py

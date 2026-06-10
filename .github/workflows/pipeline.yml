@@ -1,22 +1,30 @@
-name: Pipeline Inseguro
+name: Pipeline Seguro
 
 on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
 
+    # Injeção segura dos secrets como variáveis de ambiente na memória do job
+    env:
+      DATABASE_USER: ${{ secrets.DATABASE_USER }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      API_TOKEN: ${{ secrets.API_TOKEN }}
+
     steps:
-      - name: Checkout
+      - name: Checkout Codigo
         uses: actions/checkout@v4
 
-      - name: Exibir variáveis
-        run: |
-          echo "DATABASE_USER=admin"
-          echo "DATABASE_PASSWORD=SenhaSuperSecreta123"
-          echo "API_TOKEN=ghp_token_exemplo_123456"
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
-      - name: Executar aplicação
+      - name: Executar aplicacao
         run: python app/main.py

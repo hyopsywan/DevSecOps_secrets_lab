@@ -1,0 +1,9 @@
+.env
+*.key
+*.pem
+id_rsa
+credentials.json
+secrets/
+
+# Remove o arquivo .env do cache do Git para ele respeitar o gitignore
+# git rm --cached .env
